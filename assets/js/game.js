@@ -4,11 +4,14 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney =10;
 
-
+var randomNumber = function(min, max){
+    var value=Math.floor(Math.random()*(max-min+1)+min);
+    return value;
+}
 console.log (playerName, playerAttack, playerHealth);
 //enemy attributes
-var enemyNames=["Roborto", "Amy Android", "Robo Trumble"]
-var enemyHealth  = 50;
+var enemyNames=["Roborto", "Amy Android", "Robo Trumble"];
+var enemyHealth  = randomNumber(40, 60);
 var enemyAttack = 12;
 
 
@@ -19,12 +22,15 @@ for(var i=0; i < enemyNames.length; i++){
     console.log(enemyNames[i]+" is at "+i+" index");
 }
 
+
+
 var fight= function(enemyName){
     while(enemyHealth >0 && playerHealth > 0){
     var promptFight=window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
 
     if(promptFight === "fight" || promptFight === "FIGHT"){
-    enemyHealth=enemyHealth-playerAttack;
+        var damage= randomNumber(playerAttack-3, playerAttack);
+    enemyHealth=Math.max(0, enemyHealth-damage);
      console.log(
          playerName+" attacked "+enemyName+ ". "+enemyName + " now has "+ enemyHealth+ " health remaining"
      );
@@ -37,7 +43,7 @@ var fight= function(enemyName){
                 window.alert(enemyName+ " still has "+ enemyHealth+ " health left.");
             }
 
-     playerHealth=playerHealth-enemyAttack;
+     playerHealth=Math.max(0, playerHealth-enemyAttack);
      console.log(
         enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
         if (playerHealth <= 0) {
@@ -51,7 +57,7 @@ var fight= function(enemyName){
             var confirmSkip= window.confirm("Are you sure you'd like to quit?");
             if(confirmSkip){
                 window.alert(playerName+ " has chosen to skip the fight!");
-                playerMoney=playerMoney-10;
+                playerMoney=Math.max(0,playerMoney-10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
